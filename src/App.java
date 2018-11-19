@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import java.time.LocalDateTime;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.*;
-
+import java.util.stream.IntStream;
 
 
 public class App {
@@ -86,9 +86,34 @@ public class App {
         Map<Boolean, List<User>> partitionedUsers = users.stream().collect(Collectors.partitioningBy(User::isActive));
         partitionedUsers.forEach((Boolean k, List<User> u) -> System.out.println(k + " " + u));
 
-        //grouping by roles
+        //grouping by roles  --- couldn't quite figure this one out
         /*System.out.println();
         Map<Role,List<User>> userRoles = users.stream().collect(Collectors.groupingBy(User::getRoles));*/
+
+        //Cartesian product
+        System.out.println();
+        List<Integer> integers = new ArrayList<>(List.of(1,2,3));
+        List<Character> characters = new ArrayList<>(List.of('a','b','c'));
+
+        List<String> cartesian = new ArrayList<>();
+        //integers.forEach(i -> characters.forEach(z -> cartesian.add(String.valueOf(i)+z)));
+        characters.forEach(z-> integers.forEach(i -> cartesian.add(z + String.valueOf(i))));
+        System.out.println(cartesian);
+
+        for (int q=0;q<cartesian.size();q++){
+            if (q%Math.sqrt(cartesian.size())==0){
+                System.out.print("\n");
+            }
+            System.out.print(cartesian.get(q) + " ");
+        }
+
+        //factorial
+        System.out.println("\n\nFactorial");
+
+        int number =5;
+        System.out.println(IntStream.rangeClosed(2,number).reduce(1,(x,y) ->x*y));
+
+
     }
 
 }
